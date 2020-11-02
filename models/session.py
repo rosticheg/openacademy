@@ -22,8 +22,27 @@ class Session(models.Model):
 
     @api.depends('seats', 'attendee_ids')
     def _compute_taken_seats(self):
-        for r in self:
-            if not r.seats:
-                r.taken_seats = 0.0
+        for record in self:
+            if not record.seats:
+                record.taken_seats = 0.0
             else:
-                r.taken_seats = 100.0 * len(r.attendee_ids) / r.seats
+                record.taken_seats = 100.0 * len(record.attendee_ids) / record.seats
+
+
+    @api.onchange('seats', 'attendee_ids')
+    def _verify_valid_seats(self):
+        if self.seats < 0:
+            return {
+                'warning': {
+                    'title': _("Incorrect 'seats' value"),
+                    'message': _("The number of available seats "
+                                 "may not be negative"),
+                },
+            }
+        if self.seats < len(self.attendee_ids):
+            return {
+                'warning': {
+                    'title': _("Too many attendees"),
+                    'message': _("Increase seats or remove excess attendees"),
+                },
+            }
