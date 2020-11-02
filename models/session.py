@@ -15,4 +15,15 @@ class Session(models.Model):
     instructor_id = fields.Many2one('openacademy.partner')
     course_id = fields.Many2one('openacademy.course', ondelete="cascade", string="Course", required = True)
     attende_ids = fields.Many2many('openacademy.partner')
+    seats = fields.Integer("Number of Seats")
+    taken_seats = fields.Float(string="Taken seats", compute='_compute_taken_seats')
     active = fields.Boolean(default=True)
+
+
+    @api.depends('seats', 'attendee_ids')
+    def _compute_taken_seats(self):
+        for r in self:
+            if not r.seats:
+                r.taken_seats = 0.0
+            else:
+                r.taken_seats = 100.0 * len(r.attendee_ids) / r.seats
