@@ -1,22 +1,20 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "c:\odoo\openacademy",
+    'name': "openacademy",
 
-    'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+    'summary': """Manage courses, session in academy""",
 
     'description': """
         Long description of module's purpose
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
+    'author': "Ros Krotov",
+    'website': "http://route.in.ua",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/10.0/odoo/addons/base/module/module_data.xml
     # for the full list
-    'category': 'Uncategorized',
+    'category': 'Test module',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
